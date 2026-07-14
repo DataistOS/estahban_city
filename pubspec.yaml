@@ -1,0 +1,33 @@
+name: estahban_city
+description: A comprehensive local marketplace and classifieds platform for the citizens of Estahban.
+
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  pocketbase: ^0.24.0+1
+  provider: ^6.1.5+1
+  flutter_dotenv: ^6.0.1
+  http: ^1.6.0
+  image_picker: ^1.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
+  fonts:
+    - family: vazir
+      fonts:
+        - asset: assets/fonts/vazir.ttf
