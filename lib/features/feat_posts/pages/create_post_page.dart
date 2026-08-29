@@ -58,6 +58,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
         'description': _descController.text,
         'price': _priceController.text,
         'user': AuthService.pb.authStore.model.id,
+        'is_deleted': false, // مقداردهی اولیه فیلد حذف نرم به صورت فعال
       };
 
       final files = _selectedImage != null
@@ -65,7 +66,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
           : <http.MultipartFile>[];
 
       await AuthService.pb.collection('posts').create(body: body, files: files);
-      if (mounted) Navigator.pop(context);
+      if (mounted) Navigator.pop(context, true);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(

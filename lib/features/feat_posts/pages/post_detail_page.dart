@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 import '../models/post_model.dart';
 import '../../feat_auth/services/auth_service.dart';
+import '../services/post_service.dart';
 
 class PostDetailPage extends StatelessWidget {
   final PostModel post;
+  final PostService _postService = PostService();
 
-  const PostDetailPage({super.key, required this.post});
+  PostDetailPage({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,26 @@ class PostDetailPage extends StatelessWidget {
         .getUrl(post.toRecord(), post.image)
         .toString();
 
+    // بررسی امن وضعیت لاگین و شناسه کاربر جاری
+    final authModel = AuthService.pb.authStore.model;
+    final currentUserId = authModel != null ? authModel.id : '';
+
+    // دریافت شناسه کاربر از طریق رکورد پکت‌بیست
+    final postUserId = post.toRecord().getStringValue('user');
+    final bool isOwner =
+        currentUserId.isNotEmpty && postUserId == currentUserId;
+
     return Scaffold(
-      appBar: AppBar(title: Text(post.title)),
+      appBar: AppBar(
+        title: Text(post.title),
+        actions: [
+          if (isOwner)
+            IconButton(
+              icon: const Icon(Icons.delete, color: Colors.red),
+              onPressed: () => _confirmAndDelete(context),
+            ),
+        ],
+      ),
       body: ListView(
         children: [
           _buildImage(imageUrl),
@@ -63,6 +83,42 @@ class PostDetailPage extends StatelessWidget {
         height: 300,
         color: Colors.grey[200],
         child: const Icon(Icons.broken_image, size: 60, color: Colors.grey),
+      ),
+    );
+  }
+
+  void _confirmAndDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("حذف آگهی"),
+        content: const Text(
+          "آیا مطمئن هستید که می‌خواهید این آگهی را حذف کنید؟",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text("انصراف"),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(ctx);
+              try {
+                await _postService.softDeletePost(post.id);
+                if (context.mounted) {
+                  Navigator.pop(context, true);
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text("خطا در حذف: $e")));
+                }
+              }
+            },
+            child: const Text("حذف", style: TextStyle(color: Colors.red)),
+          ),
+        ],
       ),
     );
   }

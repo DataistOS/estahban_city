@@ -1,8 +1,10 @@
 // lib/main.dart
+
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'providers/auth_provider.dart';
 import 'features/feat_main/pages/main_navigation_page.dart';
 

@@ -3,7 +3,7 @@ name: estahban_city
 homepage: https://estahban.city/
 description: "A comprehensive local marketplace and classifieds platform for the citizens of Estahban."
 issue_tracker: https://github.com/DataistOS/estahban_city/issues
-version: 0.3.0+1
+version: 0.4.0+1
 
 # Environment
 environment:

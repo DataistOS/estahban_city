@@ -1,4 +1,5 @@
 // lib/providers/auth_provider.dart
+
 import 'package:flutter/material.dart';
 import '../features/feat_auth/services/auth_service.dart';
 
