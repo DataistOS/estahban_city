@@ -1,6 +1,8 @@
+// lib/features/feat_posts/pages/post_detail_page.dart
+
 import 'package:flutter/material.dart';
 import '../models/post_model.dart';
-import '../services/auth_service.dart';
+import '../../feat_auth/services/auth_service.dart';
 
 class PostDetailPage extends StatelessWidget {
   final PostModel post;

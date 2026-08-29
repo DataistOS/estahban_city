@@ -1,3 +1,5 @@
+// lib/features/feat_auth/services/auth_service.dart
+
 import 'package:pocketbase/pocketbase.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

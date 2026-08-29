@@ -1,11 +1,10 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'providers/auth_provider.dart';
-import 'pages/login_page.dart';
-import 'pages/home_page.dart';
-import 'services/auth_service.dart';
+import 'features/feat_main/pages/main_navigation_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,10 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
         useMaterial3: true,
       ),
-
-      home: AuthService().isAuthenticated
-          ? const HomePage()
-          : const LoginPage(),
+      home: const MainNavigationPage(),
     );
   }
 }

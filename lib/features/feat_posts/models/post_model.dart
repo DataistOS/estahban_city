@@ -1,3 +1,5 @@
+// lib/features/feat_posts/models/post_model.dart
+
 import 'package:pocketbase/pocketbase.dart';
 
 class PostModel {

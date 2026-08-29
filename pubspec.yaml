@@ -1,33 +1,75 @@
+# General Section (Metadata)
 name: estahban_city
-description: A comprehensive local marketplace and classifieds platform for the citizens of Estahban.
+homepage: https://estahban.city/
+description: "A comprehensive local marketplace and classifieds platform for the citizens of Estahban."
+issue_tracker: https://github.com/DataistOS/estahban_city/issues
+version: 0.3.0+1
 
-version: 0.1.0+1
-
+# Environment
 environment:
   sdk: ^3.8.1
 
+# Dependencies
 dependencies:
   flutter:
     sdk: flutter
+  
+  # Localizations
   flutter_localizations:
     sdk: flutter
-  cupertino_icons: ^1.0.8
-  pocketbase: ^0.24.0+1
-  provider: ^6.1.5+1
-  flutter_dotenv: ^6.0.1
-  http: ^1.6.0
-  image_picker: ^1.2.1
 
+  # Ux/Ui & Widgets
+  cupertino_icons: ^1.0.8
+  # ShimmerEffect
+  shimmer: ^3.0.0
+  # SVG
+  flutter_svg: ^2.2.0
+
+  # Backend
+  pocketbase: ^0.24.0+1
+
+  # StateManagement
+  provider: ^6.1.5+1
+
+  # Network & Web
+  http: ^1.6.0
+  url_launcher: ^6.3.2
+
+  # Config & Environment
+  flutter_dotenv: ^6.0.1
+
+  # Persistence & Hardware
+  image_picker: ^1.2.1
+  shared_preferences: ^2.5.3
+
+# Development Dependencies
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  # Linter / Code Style
   flutter_lints: ^5.0.0
 
+# Flutter specific configurations
 flutter:
   uses-material-design: true
+
+  # Assets & Resources
   assets:
     - .env
+    - assets/images/
+
+  # Custom Fonts
   fonts:
     - family: vazir
       fonts:
         - asset: assets/fonts/vazir.ttf
+
+# Flutter Launcher Icons Configuration
+flutter_launcher_icons:
+  image_path: "assets/images/logo.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
