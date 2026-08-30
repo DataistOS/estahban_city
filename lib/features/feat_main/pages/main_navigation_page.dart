@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../../feat_posts/pages/home_page.dart';
 import '../../feat_posts/pages/categories_page.dart';
+import '../../feat_search/pages/search_page.dart';
 import '../../feat_about/pages/about_us_page.dart';
 import '../../feat_auth/pages/profile_page.dart';
 
@@ -19,6 +20,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   final List<Widget> _pages = [
     const HomePage(),
     const CategoriesPage(),
+    const SearchPage(),
     const AboutUsPage(),
     const ProfilePage(),
   ];
@@ -38,8 +40,12 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'آگهی‌ها'),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'دسته‌ها'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'جستجو'),
           BottomNavigationBarItem(icon: Icon(Icons.info), label: 'درباره'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'حساب کاربری',),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'حساب کاربری',
+          ),
         ],
       ),
     );
