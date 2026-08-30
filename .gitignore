@@ -16,6 +16,7 @@ migrate_working_dir/
 # Security
 # Environment variables containing sensitive configuration.
 .env
+.tmp
 
 # IntelliJ IDEA
 # Configuration files for IntelliJ/Android Studio projects.

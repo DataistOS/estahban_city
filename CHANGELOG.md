@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.0 (2026-08-30)
+### Added
+- **Categories Architecture:** Introduced `CategoryModel` and `CategoryService` to manage hierarchical categories (parent-child relationship).
+- **Categories Page:** Added a dedicated categories view with tree-like expandable items (`ExpansionTile`) in the main bottom navigation.
+- **Category Filtering:** Implemented post filtering by category ID and created `CategoryPostsPage` to display posts belonging to a specific subcategory.
+- **Enhanced Post Creation:** Updated `CreatePostPage` and `PostService` to support selecting and saving hierarchical categories for new posts.
+### Changed
+- **Navigation:** Updated `MainNavigationPage` to include the new categories tab in the bottom navigation bar.
+- **Asset Structure:** Reorganized logo asset path structure.
+
 ## 0.3.0 (2026-08-29)
 * **Feature Architecture Restructuring**: Migrated project files into a feature-based architecture (`feat_auth`, `feat_posts`, `feat_main`, `feat_about`) to enhance code scalability and maintainability.
 * **Authentication & Profile Management**: Introduced complete login and profile pages (`login_page.dart`, `profile_page.dart`) with robust PocketBase session handling and user data rendering.

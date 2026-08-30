@@ -1,6 +1,8 @@
 // lib/features/feat_main/pages/main_navigation_page.dart
+
 import 'package:flutter/material.dart';
 import '../../feat_posts/pages/home_page.dart';
+import '../../feat_posts/pages/categories_page.dart';
 import '../../feat_about/pages/about_us_page.dart';
 import '../../feat_auth/pages/profile_page.dart';
 
@@ -16,6 +18,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
+    const CategoriesPage(),
     const AboutUsPage(),
     const ProfilePage(),
   ];
@@ -26,6 +29,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
@@ -33,11 +37,9 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'آگهی‌ها'),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: 'دسته‌ها'),
           BottomNavigationBarItem(icon: Icon(Icons.info), label: 'درباره'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'حساب کاربری',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'حساب کاربری',),
         ],
       ),
     );

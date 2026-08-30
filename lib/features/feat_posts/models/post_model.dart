@@ -17,5 +17,7 @@ class PostModel {
 
   String get image => record.getStringValue('image');
 
+  String get category => record.getStringValue('category');
+
   RecordModel toRecord() => record;
 }
