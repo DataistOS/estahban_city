@@ -91,7 +91,6 @@ class _CreatePostPageState extends State<CreatePostPage> {
         ),
       );
 
-      // پیدا کردن زیرمجموعه‌های این والد
       final children = _categories.where((c) => c.parent == parent.id).toList();
       for (var child in children) {
         items.add(
@@ -151,7 +150,16 @@ class _CreatePostPageState extends State<CreatePostPage> {
         imageFile: imageFile,
       );
 
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "آگهی شما با موفقیت ثبت شد و پس از تأیید مدیران نمایش داده خواهد شد",
+            ),
+          ),
+        );
+        Navigator.pop(context, true);
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(

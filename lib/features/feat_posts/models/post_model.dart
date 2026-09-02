@@ -19,5 +19,7 @@ class PostModel {
 
   String get category => record.getStringValue('category');
 
+  String get status => record.getStringValue('status', 'pending');
+
   RecordModel toRecord() => record;
 }

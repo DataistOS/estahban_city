@@ -4,6 +4,7 @@ import 'login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import '../services/auth_service.dart';
+import '../../feat_posts/pages/my_posts_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -108,6 +109,43 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             _buildProfileHeader(context, userName),
             const SizedBox(height: 16),
+
+            // دکمه دسترسی به آگهی‌های من
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.list_alt, color: Color(0xFF333333)),
+                title: const Text(
+                  'آگهی‌های من',
+                  style: TextStyle(
+                    fontFamily: 'Vazir',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Color(0xFF333333),
+                  ),
+                ),
+                subtitle: const Text(
+                  'مشاهده وضعیت تایید یا رد آگهی‌ها',
+                  style: TextStyle(
+                    fontFamily: 'Vazir',
+                    fontSize: 13,
+                    color: Colors.grey,
+                  ),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const MyPostsPage()),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 16),
+
             Card(
               elevation: 2,
               shape: RoundedRectangleBorder(

@@ -11,7 +11,8 @@ class PostService {
     String? categoryId,
   }) async {
     try {
-      String filter = 'is_deleted = false';
+      String filter = 'is_deleted = false && status = "approved"';
+
       if (categoryId != null && categoryId.isNotEmpty) {
         filter += ' && category = "$categoryId"';
       }
@@ -28,6 +29,23 @@ class PostService {
       return resultList.items.map((record) => PostModel(record)).toList();
     } catch (e) {
       throw Exception('خطا در دریافت آگهی‌ها: $e');
+    }
+  }
+
+  Future<List<PostModel>> fetchMyPosts() async {
+    try {
+      final userId = AuthService.pb.authStore.record?.id;
+      if (userId == null) return [];
+
+      String filter = 'user = "$userId" && is_deleted = false';
+
+      final resultList = await AuthService.pb
+          .collection('posts')
+          .getList(page: 1, perPage: 100, sort: '-created', filter: filter);
+
+      return resultList.items.map((record) => PostModel(record)).toList();
+    } catch (e) {
+      throw Exception('خطا در دریافت آگهی‌های شما: $e');
     }
   }
 
@@ -48,6 +66,7 @@ class PostService {
         'category': categoryId,
         'user': userId,
         'is_deleted': false,
+        'status': 'pending',
       };
 
       final files = <http.MultipartFile>[];

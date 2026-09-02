@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.1] - (2026-09-02)
+### Added
+- **Post Moderation System:** Implemented a moderation workflow adding `pending`, `approved`, and `rejected` statuses for newly created posts.
+- **User Posts Management:** Created `MyPostsPage` and added `fetchMyPosts` to `PostService` allowing users to track the moderation status of their submissions.
+- **Profile Integration:** Added a dedicated "My Posts" shortcut tile inside `ProfilePage` for convenient access to personal submission tracking.
+### Changed
+- **Post Visibility Control:** Restricted public post listings in `PostService` to exclusively display items with an `approved` status.
+
 ## [0.6.0] - (2026-08-30)
 ### Added
 - **Search Feature:** Created a dedicated `feat_search` module containing `SearchPage` for filtering posts by title and description.
