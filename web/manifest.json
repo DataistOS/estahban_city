@@ -1,11 +1,11 @@
 {
-    "name": "estahban_city",
-    "short_name": "estahban_city",
+    "name": "دیوار استهبان | بازارچه آنلاین و نیازمندی‌های استهبان",
+    "short_name": "دیوار استهبان",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "دیوار استهبان؛ پلتفرم جامع نیازمندی‌ها، خرید و فروش کالا و تبادل خدمات برای شهروندان استهبان.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

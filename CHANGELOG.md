@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.6.2] - (2026-09-09)
+### Changed
+- **App Icons:** Updated and completed launcher and application icons for Android, iOS, and Web platforms.
+
 ## [0.6.1] - (2026-09-02)
 ### Added
 - **Post Moderation System:** Implemented a moderation workflow adding `pending`, `approved`, and `rejected` statuses for newly created posts.
