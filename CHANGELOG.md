@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.3] - 2026-09-10
+### Added / Changed
+- **PocketBase Compatibility:** Fixed record expansion (`expand`) handling for user tiers to align with PocketBase v0.24.0+ in `PostModel`.
+- **Search Filtering:** Restricted search results in `SearchPage` to only display posts from paid user tiers (`bronze`, `silver`, `gold`).
+- **General Feeds:** Made tier filtering optional in `PostService`, allowing free-tier user posts to appear normally in home feeds and category pages.
+- **App Updates:** Updated about page content and bumped version configurations in `VERSION` and `pubspec.yaml`.
+
 ## [0.6.2] - (2026-09-09)
 ### Changed
 - **App Icons:** Updated and completed launcher and application icons for Android, iOS, and Web platforms.

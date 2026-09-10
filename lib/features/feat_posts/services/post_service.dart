@@ -9,9 +9,15 @@ class PostService {
     int page = 1,
     int perPage = 100,
     String? categoryId,
+    bool onlyPaidTiers = false,
   }) async {
     try {
       String filter = 'is_deleted = false && status = "approved"';
+
+      if (onlyPaidTiers) {
+        filter +=
+            ' && (user.tier = "bronze" || user.tier = "silver" || user.tier = "gold")';
+      }
 
       if (categoryId != null && categoryId.isNotEmpty) {
         filter += ' && category = "$categoryId"';
@@ -24,6 +30,7 @@ class PostService {
             perPage: perPage,
             sort: '-created',
             filter: filter,
+            expand: 'user',
           );
 
       return resultList.items.map((record) => PostModel(record)).toList();
@@ -41,7 +48,13 @@ class PostService {
 
       final resultList = await AuthService.pb
           .collection('posts')
-          .getList(page: 1, perPage: 100, sort: '-created', filter: filter);
+          .getList(
+            page: 1,
+            perPage: 100,
+            sort: '-created',
+            filter: filter,
+            expand: 'user',
+          );
 
       return resultList.items.map((record) => PostModel(record)).toList();
     } catch (e) {

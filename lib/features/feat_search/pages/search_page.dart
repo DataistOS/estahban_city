@@ -64,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
     });
 
     try {
-      final posts = await _postService.fetchPosts();
+      final posts = await _postService.fetchPosts(onlyPaidTiers: true);
       final filtered = posts
           .where(
             (post) =>
