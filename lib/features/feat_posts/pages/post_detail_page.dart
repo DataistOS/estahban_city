@@ -11,20 +11,34 @@ class PostDetailPage extends StatelessWidget {
 
   PostDetailPage({super.key, required this.post});
 
+  String _formatPrice(dynamic price) {
+    if (price == null || price == 0 || price == '0' || price == '') {
+      return "تماس بگیرید";
+    }
+
+    final numPrice = num.tryParse(price.toString()) ?? 0;
+    if (numPrice <= 0) {
+      return "تماس بگیرید";
+    }
+
+    return "$numPrice تومان";
+  }
+
   @override
   Widget build(BuildContext context) {
     final imageUrl = AuthService.pb.files
         .getUrl(post.toRecord(), post.image)
         .toString();
 
-    // بررسی امن وضعیت لاگین و شناسه کاربر جاری
     final authModel = AuthService.pb.authStore.model;
     final currentUserId = authModel != null ? authModel.id : '';
 
-    // دریافت شناسه کاربر از طریق رکورد پکت‌بیست
     final postUserId = post.toRecord().getStringValue('user');
     final bool isOwner =
         currentUserId.isNotEmpty && postUserId == currentUserId;
+
+    final formattedPrice = _formatPrice(post.price);
+    final bool isContactUs = formattedPrice == "تماس بگیرید";
 
     return Scaffold(
       appBar: AppBar(
@@ -53,10 +67,10 @@ class PostDetailPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "${post.price.toInt()} تومان",
-                  style: const TextStyle(
+                  formattedPrice,
+                  style: TextStyle(
                     fontSize: 20,
-                    color: Colors.green,
+                    color: isContactUs ? Colors.orange[800] : Colors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

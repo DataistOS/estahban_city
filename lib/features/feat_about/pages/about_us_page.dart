@@ -90,26 +90,26 @@ class AboutUsPage extends StatelessWidget {
               _buildSectionCard(
                 title: 'خدمات و محدوده وظایف',
                 children: [
-                  _buildBulletItem('سرویس‌دهی به سامانه‌‌های شهروندی'),
+                  _buildBulletItem('سرویس‌دهی به سامانه‌های شهروندی'),
                   _buildBulletItem('توسعه و مشارکت در سیستم‌عامل دیتائیست'),
                   _buildBulletItem(
                     'حمایت مادی و معنوی از گروه‌های کاربری گنو/لینوکس (NGO)',
                   ),
                   _buildBulletItem('گروه کاربران لینوکس استهبان'),
                   _buildBulletItem(
-                    'در دسترس قرار دادن ابزار‌های توسعه و زیرساختی',
+                    'در دسترس قرار دادن ابزارهای توسعه و زیرساختی',
                   ),
                   _buildBulletItem(
                     'فرهنگ‌سازی در زمینه اندیشه دیتائیسم (داده‌گرایی)',
                   ),
                   _buildBulletItem('داده‌کاوی و تحلیل رفتار مشتری'),
-                  _buildBulletItem('تحلیل انواع کسب و کار'),
+                  _buildBulletItem('تحلیل انواع کسب‌وکار'),
                   _buildBulletItem('امنیت شبکه، تست و نفوذ'),
                   _buildBulletItem(
                     'مشاوره و نظارت بر اجرای طرح‌های انفورماتیکی',
                   ),
                   _buildBulletItem('بهینه‌سازی مشاغل با هوش مصنوعی'),
-                  _buildBulletItem('طراحی وبسایت و اپلیکیشن موبایل'),
+                  _buildBulletItem('طراحی وب‌سایت و اپلیکیشن موبایل'),
                   _buildBulletItem('طراحی سرویس‌های نرم‌افزاری'),
                   _buildBulletItem('طراحی و توسعه بازی‌های رایانه‌ای'),
                   _buildBulletItem('تولید و پشتیبانی بسته‌های نرم‌افزاری'),
@@ -119,7 +119,7 @@ class AboutUsPage extends StatelessWidget {
                     'طراحی و پیاده‌سازی زیرساخت‌های مرتبط با کشاورزی و باغبانی',
                   ),
                   _buildBulletItem(
-                    'اجرا، پشتیبانی، خرید و فروش کلیه‌ی تجهیزات رایانه‌ای و موبایل',
+                    'اجرا، پشتیبانی، خرید و فروش کلیه تجهیزات رایانه‌ای و موبایل',
                   ),
                 ],
               ),
@@ -144,7 +144,7 @@ class AboutUsPage extends StatelessWidget {
                     const LinkItem('پروفایل نکس', 'https://next.dataist.ir/u/estahbanlug'),
                     const LinkItem('گروه نکس', 'https://next.dataist.ir/call/63fpsv8u'),
                   ]),
-                  _buildLinkCategory('Dataist.ir | سیستم عامل دیتائیست', [
+                  _buildLinkCategory('Dataist.ir | سیستم‌عامل دیتائیست', [
                     const LinkItem('وب‌سایت', 'https://dataist.ir'),
                     const LinkItem('احراز هویت', 'https://idna.dataist.ir'),
                     const LinkItem('مستندات', 'https://dpic.dataist.ir'),
@@ -157,10 +157,10 @@ class AboutUsPage extends StatelessWidget {
                     const LinkItem('دیسترواچ', 'https://distrowatch.com/table.php?distribution=dataist'),
                   ]),
                   _buildLinkCategory('Estahban.city | دیوار استهبان', [
-                    const LinkItem('وبسایت', 'https://estahban.city'),
+                    const LinkItem('وب‌سایت', 'https://estahban.city'),
                     const LinkItem('تلگرام', 'https://t.me/www_estahban_city'),
                     const LinkItem('اینستاگرام', 'https://instagram.com/eatahban_city'),
-                    const LinkItem('کانال نکس‌', 'https://next.dataist.ir/call/6ngrruh7'),
+                    const LinkItem('کانال نکس', 'https://next.dataist.ir/call/6ngrruh7'),
                   ]),
                   _buildLinkCategory('My.Estahban.city | اپلیکیشن شهروندی استهبان‌من', [
                     const LinkItem('استهبان‌من', 'https://my.estahban.city'),
@@ -180,13 +180,13 @@ class AboutUsPage extends StatelessWidget {
                     const LinkItem('تلگرام', 'https://t.me/www_Garden_city'),
                   ]),
                   _buildLinkCategory('FBSC.Estahban.city | انبار و لجستیک', [
-                    const LinkItem('وبسایت', 'https://fbsc.estahban.city'),
+                    const LinkItem('وب‌سایت', 'https://fbsc.estahban.city'),
                   ]),
                   _buildLinkCategory('MyEstahban | فروشگاه تجربه‌محور استهبان‌من', [
                     const LinkItem('فروشگاه', 'https://my.estahban.city'),
                   ]),
                   _buildLinkCategory('Next.Dataist.ir | راهکار سازمانی', [
-                    const LinkItem('وبسایت', 'https://next.dataist.ir'),
+                    const LinkItem('وب‌سایت', 'https://next.dataist.ir'),
                   ]),
                 ],
               ),

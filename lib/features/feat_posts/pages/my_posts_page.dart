@@ -39,6 +39,19 @@ class _MyPostsPageState extends State<MyPostsPage> {
     }
   }
 
+  String _formatPrice(dynamic price) {
+    if (price == null || price == 0 || price == '0' || price == '') {
+      return "تماس بگیرید";
+    }
+
+    final numPrice = num.tryParse(price.toString()) ?? 0;
+    if (numPrice <= 0) {
+      return "تماس بگیرید";
+    }
+
+    return "$numPrice تومان";
+  }
+
   Widget _buildStatusBadge(String status) {
     String text;
     Color color;
@@ -62,7 +75,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color),
       ),
@@ -101,7 +114,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 4),
-                        Text("قیمت: ${post.price} تومان"),
+                        Text("قیمت: ${_formatPrice(post.price)}"),
                         const SizedBox(height: 8),
                         _buildStatusBadge(post.status),
                       ],

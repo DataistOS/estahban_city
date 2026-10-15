@@ -139,11 +139,26 @@ class _PostItem extends StatelessWidget {
 
   const _PostItem({required this.post});
 
+  String _formatPrice(dynamic price) {
+    if (price == null || price == 0 || price == '0' || price == '') {
+      return "تماس بگیرید";
+    }
+
+    final numPrice = num.tryParse(price.toString()) ?? 0;
+    if (numPrice <= 0) {
+      return "تماس بگیرید";
+    }
+
+    return "$numPrice تومان";
+  }
+
   @override
   Widget build(BuildContext context) {
     final url = AuthService.pb.files
         .getUrl(post.toRecord(), post.image)
         .toString();
+
+    final formattedPrice = _formatPrice(post.price);
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -162,7 +177,17 @@ class _PostItem extends StatelessWidget {
           post.title,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        subtitle: Text("${post.price.toInt()} تومان"),
+        subtitle: Text(
+          formattedPrice,
+          style: TextStyle(
+            color: formattedPrice == "تماس بگیرید"
+                ? Colors.orange[800]
+                : Colors.grey[700],
+            fontWeight: formattedPrice == "تماس بگیرید"
+                ? FontWeight.bold
+                : FontWeight.normal,
+          ),
+        ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () => Navigator.push(
           context,
