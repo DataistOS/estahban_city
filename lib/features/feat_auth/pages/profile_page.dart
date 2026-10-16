@@ -2,7 +2,6 @@
 
 import 'login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' as intl;
 import '../services/auth_service.dart';
 import '../../feat_posts/pages/my_posts_page.dart';
 
@@ -17,9 +16,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final isLoggedIn = AuthService.pb.authStore.isValid;
-    final model = AuthService.pb.authStore.model;
+    final record = AuthService.pb.authStore.record;
 
-    if (!isLoggedIn || model == null) {
+    if (!isLoggedIn || record == null) {
       return Scaffold(
         backgroundColor: const Color(0xFFDDE3F1),
         appBar: AppBar(
@@ -80,16 +79,21 @@ class _ProfilePageState extends State<ProfilePage> {
       );
     }
 
-    final userName = model.data['name'] ?? 'شهروند استهبان';
-    final userEmail = model.data['email'] ?? 'نامشخص';
-    final userPhone = model.data['phone_number'] ?? 'وارد نشده';
-    final userAddress = model.data['address'] ?? 'وارد نشده';
-    final userType = model.data['user_type'] ?? 'عادی';
+    final userName = record.data['name'] ?? 'شهروند استهبان';
+    final userEmail = record.data['email'] ?? 'نامشخص';
+    final userPhone = record.data['phone_number'] ?? 'وارد نشده';
+    final userAddress = record.data['address'] ?? 'وارد نشده';
+    final userType = record.data['user_type'] ?? 'عادی';
 
-    final createdStr = model.created ?? '';
-    final formattedDateCreated = createdStr.isNotEmpty
-        ? intl.DateFormat('yyyy/MM/dd').format(DateTime.parse(createdStr))
-        : 'نامشخص';
+    final createdStr = record.get<String>('created');
+    String formattedDateCreated = 'نامشخص';
+    if (createdStr.isNotEmpty) {
+      final parsedDate = DateTime.tryParse(createdStr);
+      if (parsedDate != null) {
+        formattedDateCreated =
+            '${parsedDate.year}/${parsedDate.month.toString().padLeft(2, '0')}/${parsedDate.day.toString().padLeft(2, '0')}';
+      }
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xFFDDE3F1),
@@ -110,7 +114,6 @@ class _ProfilePageState extends State<ProfilePage> {
             _buildProfileHeader(context, userName),
             const SizedBox(height: 16),
 
-            // دکمه دسترسی به آگهی‌های من
             Card(
               elevation: 2,
               shape: RoundedRectangleBorder(
@@ -232,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 3),

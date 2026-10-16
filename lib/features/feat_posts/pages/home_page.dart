@@ -88,17 +88,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("دیوار استهبان"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              AuthService.pb.authStore.clear();
-            },
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text("دیوار استهبان")),
       body: RefreshIndicator(
         onRefresh: _refreshPosts,
         child: _posts.isEmpty && _isLoading
@@ -180,6 +170,7 @@ class _PostItem extends StatelessWidget {
         subtitle: Text(
           formattedPrice,
           style: TextStyle(
+            fontSize: 11.5,
             color: formattedPrice == "تماس بگیرید"
                 ? Colors.orange[800]
                 : Colors.grey[700],
