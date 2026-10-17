@@ -17,6 +17,16 @@ class PostModel {
 
   String get image => record.getStringValue('image');
 
+  List<String> get gallery {
+    try {
+      final value = record.data['gallery'];
+      if (value is List) {
+        return value.map((e) => e.toString()).toList();
+      }
+    } catch (_) {}
+    return [];
+  }
+
   String get category => record.getStringValue('category');
 
   String get status => record.getStringValue('status', 'pending');
@@ -25,20 +35,14 @@ class PostModel {
 
   String get userTier {
     try {
-      final expandedMap = record.expand;
-      if (expandedMap.containsKey('user')) {
-        final dynamic userData = expandedMap['user'];
+      final userRecord = record.get<RecordModel?>('expand.user');
+      if (userRecord != null) {
+        return userRecord.getStringValue('tier', 'free');
+      }
 
-        if (userData is List) {
-          if (userData.isNotEmpty) {
-            final firstUser = userData.first;
-            if (firstUser is RecordModel) {
-              return firstUser.getStringValue('tier', 'free');
-            }
-          }
-        } else if (userData is RecordModel) {
-          return userData.getStringValue('tier', 'free');
-        }
+      final userList = record.get<List<RecordModel>>('expand.user');
+      if (userList.isNotEmpty) {
+        return userList.first.getStringValue('tier', 'free');
       }
     } catch (_) {}
     return 'free';

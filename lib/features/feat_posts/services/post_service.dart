@@ -68,6 +68,7 @@ class PostService {
     required double price,
     required String categoryId,
     http.MultipartFile? imageFile,
+    List<http.MultipartFile>? galleryFiles,
   }) async {
     try {
       final userId = AuthService.pb.authStore.record?.id;
@@ -85,6 +86,9 @@ class PostService {
       final files = <http.MultipartFile>[];
       if (imageFile != null) {
         files.add(imageFile);
+      }
+      if (galleryFiles != null && galleryFiles.isNotEmpty) {
+        files.addAll(galleryFiles);
       }
 
       await AuthService.pb.collection('posts').create(body: body, files: files);

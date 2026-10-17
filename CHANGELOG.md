@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.9] - 2026-10-17
+### Added
+- **Post Gallery:** Added support for uploading multiple images (up to 4 items) for listings in `CreatePostPage` and `PostService`.
+- **Image Slider & Full-Screen View:** Implemented horizontal preview, pagination dots, and a dedicated `FullScreenGalleryPage` with multi-touch zoom (`InteractiveViewer`) in `PostDetailPage`.
+### Changed & Refactored
+- Updated `PostModel` to retrieve expanded relations using the modern `record.get<T>()` method, removing deprecated `expand` warnings.
+- Updated `PostDetailPage` to use `authStore.record` instead of the deprecated `authStore.model`.
+- Cleaned up and reorganized dependencies in `pubspec.yaml` under standard sections.
+
 ## [0.6.3] - 2026-09-10
 ### Added / Changed
 - **PocketBase Compatibility:** Fixed record expansion (`expand`) handling for user tiers to align with PocketBase v0.24.0+ in `PostModel`.

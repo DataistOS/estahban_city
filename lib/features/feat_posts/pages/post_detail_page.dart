@@ -5,11 +5,18 @@ import '../models/post_model.dart';
 import '../../feat_auth/services/auth_service.dart';
 import '../services/post_service.dart';
 
-class PostDetailPage extends StatelessWidget {
+class PostDetailPage extends StatefulWidget {
   final PostModel post;
-  final PostService _postService = PostService();
 
-  PostDetailPage({super.key, required this.post});
+  const PostDetailPage({super.key, required this.post});
+
+  @override
+  State<PostDetailPage> createState() => _PostDetailPageState();
+}
+
+class _PostDetailPageState extends State<PostDetailPage> {
+  final PostService _postService = PostService();
+  int _currentImageIndex = 0;
 
   String _formatPrice(dynamic price) {
     if (price == null || price == 0 || price == '0' || price == '') {
@@ -24,25 +31,55 @@ class PostDetailPage extends StatelessWidget {
     return "$numPrice تومان";
   }
 
+  void _openFullScreenGallery(
+    BuildContext context,
+    List<String> imageUrls,
+    int initialIndex,
+  ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => FullScreenGalleryPage(
+          imageUrls: imageUrls,
+          initialIndex: initialIndex,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final imageUrl = AuthService.pb.files
-        .getUrl(post.toRecord(), post.image)
-        .toString();
+    final List<String> allImageUrls = [];
+    if (widget.post.image.isNotEmpty) {
+      allImageUrls.add(
+        AuthService.pb.files
+            .getUrl(widget.post.toRecord(), widget.post.image)
+            .toString(),
+      );
+    }
+    for (var galleryImg in widget.post.gallery) {
+      if (galleryImg.isNotEmpty) {
+        allImageUrls.add(
+          AuthService.pb.files
+              .getUrl(widget.post.toRecord(), galleryImg)
+              .toString(),
+        );
+      }
+    }
 
-    final authModel = AuthService.pb.authStore.model;
-    final currentUserId = authModel != null ? authModel.id : '';
+    final authRecord = AuthService.pb.authStore.record;
+    final currentUserId = authRecord != null ? authRecord.id : '';
 
-    final postUserId = post.toRecord().getStringValue('user');
+    final postUserId = widget.post.toRecord().getStringValue('user');
     final bool isOwner =
         currentUserId.isNotEmpty && postUserId == currentUserId;
 
-    final formattedPrice = _formatPrice(post.price);
+    final formattedPrice = _formatPrice(widget.post.price);
     final bool isContactUs = formattedPrice == "تماس بگیرید";
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(post.title),
+        title: Text(widget.post.title),
         actions: [
           if (isOwner)
             IconButton(
@@ -53,14 +90,79 @@ class PostDetailPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          _buildImage(imageUrl),
+          if (allImageUrls.isNotEmpty) ...[
+            SizedBox(
+              height: 300,
+              child: PageView.builder(
+                itemCount: allImageUrls.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentImageIndex = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () =>
+                        _openFullScreenGallery(context, allImageUrls, index),
+                    child: Hero(
+                      tag: 'post_image_$index',
+                      child: Image.network(
+                        allImageUrls[index],
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          color: Colors.grey[200],
+                          child: const Icon(
+                            Icons.broken_image,
+                            size: 60,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            if (allImageUrls.length > 1)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    allImageUrls.length,
+                    (index) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: _currentImageIndex == index ? 12 : 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentImageIndex == index
+                            ? Colors.teal
+                            : Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ] else
+            Container(
+              height: 300,
+              color: Colors.grey[200],
+              child: const Icon(
+                Icons.image_not_supported,
+                size: 60,
+                color: Colors.grey,
+              ),
+            ),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  post.title,
+                  widget.post.title,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -76,27 +178,13 @@ class PostDetailPage extends StatelessWidget {
                 ),
                 const Divider(height: 30),
                 Text(
-                  post.description,
+                  widget.post.description,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildImage(String url) {
-    return Image.network(
-      url,
-      height: 300,
-      width: double.infinity,
-      fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => Container(
-        height: 300,
-        color: Colors.grey[200],
-        child: const Icon(Icons.broken_image, size: 60, color: Colors.grey),
       ),
     );
   }
@@ -118,7 +206,7 @@ class PostDetailPage extends StatelessWidget {
             onPressed: () async {
               Navigator.pop(ctx);
               try {
-                await _postService.softDeletePost(post.id);
+                await _postService.softDeletePost(widget.post.id);
                 if (context.mounted) {
                   Navigator.pop(context, true);
                 }
@@ -133,6 +221,83 @@ class PostDetailPage extends StatelessWidget {
             child: const Text("حذف", style: TextStyle(color: Colors.red)),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class FullScreenGalleryPage extends StatefulWidget {
+  final List<String> imageUrls;
+  final int initialIndex;
+
+  const FullScreenGalleryPage({
+    super.key,
+    required this.imageUrls,
+    required this.initialIndex,
+  });
+
+  @override
+  State<FullScreenGalleryPage> createState() => _FullScreenGalleryPageState();
+}
+
+class _FullScreenGalleryPageState extends State<FullScreenGalleryPage> {
+  late PageController _pageController;
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          '${_currentIndex + 1} از ${widget.imageUrls.length}',
+          style: const TextStyle(color: Colors.white, fontFamily: 'Vazir'),
+        ),
+      ),
+      body: Center(
+        child: PageView.builder(
+          controller: _pageController,
+          itemCount: widget.imageUrls.length,
+          onPageChanged: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          itemBuilder: (context, index) {
+            return InteractiveViewer(
+              panEnabled: true,
+              boundaryMargin: const EdgeInsets.all(20),
+              minScale: 0.5,
+              maxScale: 4.0,
+              child: Center(
+                child: Image.network(
+                  widget.imageUrls[index],
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) => const Icon(
+                    Icons.broken_image,
+                    size: 60,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

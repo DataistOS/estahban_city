@@ -27,7 +27,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
   List<CategoryModel> _categories = [];
   String? _selectedCategoryId;
+
   File? _selectedImage;
+  final List<File> _galleryImages = [];
+
   bool _isLoading = false;
   bool _isLoadingCategories = true;
 
@@ -62,10 +65,34 @@ class _CreatePostPageState extends State<CreatePostPage> {
     super.dispose();
   }
 
-  Future<void> _pickImage() async {
+  Future<void> _pickMainImage() async {
     final file = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (file != null) {
       setState(() => _selectedImage = File(file.path));
+    }
+  }
+
+  Future<void> _pickGalleryImages() async {
+    if (_galleryImages.length >= 4) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("حداکثر می‌توانید ۴ تصویر برای گالری انتخاب کنید"),
+        ),
+      );
+      return;
+    }
+
+    final picker = ImagePicker();
+    final pickedFiles = await picker.pickMultiImage();
+
+    if (pickedFiles.isNotEmpty) {
+      setState(() {
+        for (var picked in pickedFiles) {
+          if (_galleryImages.length < 4) {
+            _galleryImages.add(File(picked.path));
+          }
+        }
+      });
     }
   }
 
@@ -142,12 +169,20 @@ class _CreatePostPageState extends State<CreatePostPage> {
         );
       }
 
+      List<http.MultipartFile> galleryMultipartFiles = [];
+      for (var file in _galleryImages) {
+        galleryMultipartFiles.add(
+          await http.MultipartFile.fromPath('gallery', file.path),
+        );
+      }
+
       await _postService.createPost(
         title: _titleController.text,
         description: _descController.text,
         price: priceValue,
         categoryId: _selectedCategoryId!,
         imageFile: imageFile,
+        galleryFiles: galleryMultipartFiles,
       );
 
       if (mounted) {
@@ -212,21 +247,100 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _pickImage,
-                    child: const Text("انتخاب عکس"),
+
+                  ElevatedButton.icon(
+                    onPressed: _pickMainImage,
+                    icon: const Icon(Icons.image),
+                    label: const Text("انتخاب تصویر اصلی (کاور)"),
                   ),
                   if (_selectedImage != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Image.file(_selectedImage!, height: 150),
+                    Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Image.file(
+                            _selectedImage!,
+                            height: 150,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.remove_circle,
+                            color: Colors.red,
+                          ),
+                          onPressed: () =>
+                              setState(() => _selectedImage = null),
+                        ),
+                      ],
                     ),
-                  const SizedBox(height: 20),
+
+                  const SizedBox(height: 15),
+
+                  ElevatedButton.icon(
+                    onPressed: _pickGalleryImages,
+                    icon: const Icon(Icons.photo_library),
+                    label: Text(
+                      "افزودن تصاویر گالری (${_galleryImages.length}/4)",
+                    ),
+                  ),
+                  if (_galleryImages.isNotEmpty)
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _galleryImages.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              right: 8.0,
+                              top: 8.0,
+                            ),
+                            child: Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                Image.file(
+                                  _galleryImages[index],
+                                  width: 90,
+                                  height: 90,
+                                  fit: BoxFit.cover,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(
+                                      () => _galleryImages.removeAt(index),
+                                    );
+                                  },
+                                  child: Container(
+                                    color: Colors.black54,
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+
+                  const SizedBox(height: 25),
                   _isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: _submit,
-                          child: const Text("ثبت آگهی"),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          child: const Text(
+                            "ثبت نهایی آگهی",
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                 ],
               ),
