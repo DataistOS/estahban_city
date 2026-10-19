@@ -2,6 +2,7 @@
 
 import 'login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../services/auth_service.dart';
 import '../../feat_posts/pages/my_posts_page.dart';
 
@@ -85,6 +86,14 @@ class _ProfilePageState extends State<ProfilePage> {
     final userAddress = record.data['address'] ?? 'وارد نشده';
     final userType = record.data['user_type'] ?? 'عادی';
 
+    final avatarFileName = record.getStringValue('avatar');
+    String? avatarUrl;
+    if (avatarFileName.isNotEmpty) {
+      avatarUrl = AuthService.pb.files
+          .getUrl(record, avatarFileName)
+          .toString();
+    }
+
     final createdStr = record.get<String>('created');
     String formattedDateCreated = 'نامشخص';
     if (createdStr.isNotEmpty) {
@@ -111,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildProfileHeader(context, userName),
+            _buildProfileHeader(context, userName, avatarUrl),
             const SizedBox(height: 16),
 
             Card(
@@ -227,7 +236,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildProfileHeader(BuildContext context, String name) {
+  Widget _buildProfileHeader(
+    BuildContext context,
+    String name,
+    String? avatarUrl,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
@@ -244,10 +257,29 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 40,
-            backgroundColor: Color(0xFF333333),
-            child: Icon(Icons.person, size: 50, color: Colors.white),
+            backgroundColor: const Color(0xFF333333),
+            child: ClipOval(
+              child: avatarUrl != null && avatarUrl.isNotEmpty
+                  ? CachedNetworkImage(
+                      imageUrl: avatarUrl,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.person,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.person, size: 50, color: Colors.white),
+            ),
           ),
           const SizedBox(height: 10),
           Text(

@@ -3,7 +3,7 @@ name: estahban_city
 homepage: https://estahban.city/
 description: "A comprehensive local marketplace and classifieds platform for the citizens of Estahban."
 issue_tracker: https://github.com/DataistOS/estahban_city/issues
-version: 0.6.9+1
+version: 0.7.0+1
 
 # Environment
 environment:
@@ -20,6 +20,9 @@ dependencies:
 
   # Ux/Ui & Widgets
   cupertino_icons: ^1.0.8
+
+  # Image Caching & UI widgets
+  cached_network_image: ^3.4.1
 
   # ShimmerEffect
   shimmer: ^3.0.0
