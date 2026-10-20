@@ -31,6 +31,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
     return "$numPrice تومان";
   }
 
+  String _formatDate(String dateStr) {
+    if (dateStr.isEmpty) return 'نامشخص';
+    final parsedDate = DateTime.tryParse(dateStr);
+    if (parsedDate != null) {
+      return '${parsedDate.year}/${parsedDate.month.toString().padLeft(2, '0')}/${parsedDate.day.toString().padLeft(2, '0')}';
+    }
+    return 'نامشخص';
+  }
+
   void _openFullScreenGallery(
     BuildContext context,
     List<String> imageUrls,
@@ -76,6 +85,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
     final formattedPrice = _formatPrice(widget.post.price);
     final bool isContactUs = formattedPrice == "تماس بگیرید";
+    final formattedDate = _formatDate(widget.post.created);
 
     return Scaffold(
       appBar: AppBar(
@@ -168,14 +178,39 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  formattedPrice,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: isContactUs ? Colors.orange[800] : Colors.green,
-                    fontWeight: FontWeight.bold,
-                  ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      formattedPrice,
+                      style: TextStyle(
+                        fontSize: isContactUs ? 16 : 20,
+                        color: isContactUs ? Colors.orange[800] : Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.calendar_today,
+                          size: 14,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'تاریخ ثبت: $formattedDate',
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey,
+                            fontFamily: 'Vazir',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
+
                 const Divider(height: 30),
                 Text(
                   widget.post.description,

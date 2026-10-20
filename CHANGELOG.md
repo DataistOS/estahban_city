@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.1] - 2026-10-20
+### Added & Refined
+- **Post Details:** Added a formatted creation date (`created`) with an icon next to the price section in `PostDetailPage`.
+- **UI Styling:** Adjusted the font size of the "Contact Us" text (`تماس بگیرید`) to be more compact and visually balanced compared to standard numeric prices.
+- **Data Model:** Extended `PostModel` to securely retrieve the system `created` autodate field from PocketBase.
+
 ## [0.6.9] - 2026-10-17
 ### Added
 - **Post Gallery:** Added support for uploading multiple images (up to 4 items) for listings in `CreatePostPage` and `PostService`.

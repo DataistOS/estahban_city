@@ -17,6 +17,8 @@ class PostModel {
 
   String get image => record.getStringValue('image');
 
+  String get created => record.getStringValue('created');
+
   List<String> get gallery {
     try {
       final value = record.data['gallery'];
