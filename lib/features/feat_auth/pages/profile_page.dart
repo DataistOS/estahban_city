@@ -84,7 +84,19 @@ class _ProfilePageState extends State<ProfilePage> {
     final userEmail = record.data['email'] ?? 'نامشخص';
     final userPhone = record.data['phone_number'] ?? 'وارد نشده';
     final userAddress = record.data['address'] ?? 'وارد نشده';
-    final userType = record.data['user_type'] ?? 'عادی';
+
+    final rawUserType = record.getStringValue('user_type', 'individual');
+    final String userType = rawUserType == 'legal' ? 'حقوقی' : 'حقیقی';
+
+    final rawTier = record.getStringValue('tier', 'free');
+    String userTierLabel = 'عادی (Free)';
+    if (rawTier == 'bronze') {
+      userTierLabel = 'برنزی (Bronze)';
+    } else if (rawTier == 'silver') {
+      userTierLabel = 'نقره‌ای (Silver)';
+    } else if (rawTier == 'gold') {
+      userTierLabel = 'طلایی (Gold)';
+    }
 
     final avatarFileName = record.getStringValue('avatar');
     String? avatarUrl;
@@ -120,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildProfileHeader(context, userName, avatarUrl),
+            _buildProfileHeader(context, userName, userTierLabel, avatarUrl),
             const SizedBox(height: 16),
 
             Card(
@@ -164,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Column(
                   children: [
                     _buildInfoTile(context, Icons.email, 'ایمیل', userEmail),
@@ -186,6 +198,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       'نوع کاربر',
                       userType,
                     ),
+                    _buildInfoTile(
+                      context,
+                      Icons.workspace_premium,
+                      'سطح اشتراک',
+                      userTierLabel,
+                    ),
                   ],
                 ),
               ),
@@ -197,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Column(
                   children: [
                     _buildInfoTile(
@@ -239,18 +257,19 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildProfileHeader(
     BuildContext context,
     String name,
+    String tierLabel,
     String? avatarUrl,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
+            color: Colors.black.withValues(alpha: 0.04),
+            spreadRadius: 2,
+            blurRadius: 8,
             offset: const Offset(0, 3),
           ),
         ],
@@ -258,14 +277,14 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         children: [
           CircleAvatar(
-            radius: 40,
+            radius: 42,
             backgroundColor: const Color(0xFF333333),
             child: ClipOval(
               child: avatarUrl != null && avatarUrl.isNotEmpty
                   ? CachedNetworkImage(
                       imageUrl: avatarUrl,
-                      width: 80,
-                      height: 80,
+                      width: 84,
+                      height: 84,
                       fit: BoxFit.cover,
                       placeholder: (context, url) =>
                           const CircularProgressIndicator(
@@ -281,7 +300,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   : const Icon(Icons.person, size: 50, color: Colors.white),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           Text(
             name,
             style: const TextStyle(
@@ -289,6 +308,24 @@ class _ProfilePageState extends State<ProfilePage> {
               fontWeight: FontWeight.bold,
               fontSize: 20,
               color: Color(0xFF333333),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.teal.shade50,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.teal.shade200, width: 1),
+            ),
+            child: Text(
+              tierLabel,
+              style: TextStyle(
+                fontFamily: 'Vazir',
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal.shade800,
+              ),
             ),
           ),
         ],
@@ -321,7 +358,7 @@ class _ProfilePageState extends State<ProfilePage> {
           color: Color(0xFF666666),
         ),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
     );
   }
 }
