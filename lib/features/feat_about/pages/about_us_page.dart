@@ -44,19 +44,7 @@ class AboutUsPage extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: const Color(0xFFDDE3F1),
-        appBar: AppBar(
-          title: const Text(
-            'درباره ما',
-            style: TextStyle(
-              fontFamily: 'Vazir',
-              color: Color(0xFF333333),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          iconTheme: const IconThemeData(color: Color(0xFF333333)),
-        ),
+        appBar: AppBar(title: const Text('درباره ما')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -131,19 +119,34 @@ class AboutUsPage extends StatelessWidget {
                     const LinkItem('استهبان‌من', 'https://my.estahban.city'),
                     const LinkItem('مستندات', 'https://dpic.dataist.ir'),
                     const LinkItem('توانمندسازی', 'https://t.me/EstahbanLug'),
-                    const LinkItem('وضعیت', 'https://status.dataist.ir/status/heuristic'),
+                    const LinkItem(
+                      'وضعیت',
+                      'https://status.dataist.ir/status/heuristic',
+                    ),
                     const LinkItem('ثبت‌نام', 'https://idna.dataist.ir'),
                     const LinkItem('دیوار استهبان', 'https://estahban.city'),
                   ], isFeatured: true),
                   const Divider(height: 28, thickness: 1),
 
-                  _buildLinkCategory('EstahbanLug.ir | گروه کاربران گنو لینوکس استهبان', [
-                    const LinkItem('تلگرام', 'https://t.me/EstahbanLug'),
-                    const LinkItem('اکس', 'https://x.com/EstahbanLug'),
-                    const LinkItem('اینستاگرام', 'https://instagram.com/estahban_lug'),
-                    const LinkItem('پروفایل نکس', 'https://next.dataist.ir/u/estahbanlug'),
-                    const LinkItem('گروه نکس', 'https://next.dataist.ir/call/63fpsv8u'),
-                  ]),
+                  _buildLinkCategory(
+                    'EstahbanLug.ir | گروه کاربران گنو لینوکس استهبان',
+                    [
+                      const LinkItem('تلگرام', 'https://t.me/EstahbanLug'),
+                      const LinkItem('اکس', 'https://x.com/EstahbanLug'),
+                      const LinkItem(
+                        'اینستاگرام',
+                        'https://instagram.com/estahban_lug',
+                      ),
+                      const LinkItem(
+                        'پروفایل نکس',
+                        'https://next.dataist.ir/u/estahbanlug',
+                      ),
+                      const LinkItem(
+                        'گروه نکس',
+                        'https://next.dataist.ir/call/63fpsv8u',
+                      ),
+                    ],
+                  ),
                   _buildLinkCategory('Dataist.ir | سیستم‌عامل دیتائیست', [
                     const LinkItem('وب‌سایت', 'https://dataist.ir'),
                     const LinkItem('احراز هویت', 'https://idna.dataist.ir'),
@@ -151,30 +154,60 @@ class AboutUsPage extends StatelessWidget {
                     const LinkItem('حمایت مالی', 'https://donate.dataist.ir'),
                     const LinkItem('تلگرام', 'https://t.me/DataistLinux'),
                     const LinkItem('گیت‌هاب', 'https://github.com/DataistOS'),
-                    const LinkItem('اینستاگرام', 'https://instagram.com/dataist_ir'),
-                    const LinkItem('پروفایل', 'https://next.dataist.ir/u/dataist'),
-                    const LinkItem('وضعیت سرویس', 'https://status.dataist.ir/status/heuristic'),
-                    const LinkItem('دیسترواچ', 'https://distrowatch.com/table.php?distribution=dataist'),
+                    const LinkItem(
+                      'اینستاگرام',
+                      'https://instagram.com/dataist_ir',
+                    ),
+                    const LinkItem(
+                      'پروفایل',
+                      'https://next.dataist.ir/u/dataist',
+                    ),
+                    const LinkItem(
+                      'وضعیت سرویس',
+                      'https://status.dataist.ir/status/heuristic',
+                    ),
+                    const LinkItem(
+                      'دیسترواچ',
+                      'https://distrowatch.com/table.php?distribution=dataist',
+                    ),
                   ]),
                   _buildLinkCategory('Estahban.city | دیوار استهبان', [
                     const LinkItem('وب‌سایت', 'https://estahban.city'),
                     const LinkItem('تلگرام', 'https://t.me/www_estahban_city'),
-                    const LinkItem('اینستاگرام', 'https://instagram.com/eatahban_city'),
-                    const LinkItem('کانال نکس', 'https://next.dataist.ir/call/6ngrruh7'),
+                    const LinkItem(
+                      'اینستاگرام',
+                      'https://instagram.com/eatahban_city',
+                    ),
+                    const LinkItem(
+                      'کانال نکس',
+                      'https://next.dataist.ir/call/6ngrruh7',
+                    ),
                   ]),
-                  _buildLinkCategory('My.Estahban.city | اپلیکیشن شهروندی استهبان‌من', [
-                    const LinkItem('استهبان‌من', 'https://my.estahban.city'),
-                    const LinkItem('تلگرام', 'https://t.me/my_estahban_city'),
-                    const LinkItem('فروشگاه', 'https://t.me/EstahbanShop'),
-                    const LinkItem('اینستاگرام', 'https://instagram.com/my_estahban_city'),
-                    const LinkItem('اینستاگرام', 'https://instagram.com/EstahbanShop'),
-                  ]),
+                  _buildLinkCategory(
+                    'My.Estahban.city | اپلیکیشن شهروندی استهبان‌من',
+                    [
+                      const LinkItem('استهبان‌من', 'https://my.estahban.city'),
+                      const LinkItem('تلگرام', 'https://t.me/my_estahban_city'),
+                      const LinkItem('فروشگاه', 'https://t.me/EstahbanShop'),
+                      const LinkItem(
+                        'اینستاگرام',
+                        'https://instagram.com/my_estahban_city',
+                      ),
+                      const LinkItem(
+                        'اینستاگرام',
+                        'https://instagram.com/EstahbanShop',
+                      ),
+                    ],
+                  ),
                   _buildLinkCategory('FTDC | شرکت آزاداندیش داده‌ساز', [
                     const LinkItem('پروفایل', 'https://next.dataist.ir/u/ftdc'),
                   ]),
                   _buildLinkCategory('Dataism.art | نمایشگاه هنر داده‌گرایی', [
                     const LinkItem('تلگرام', 'https://t.me/dataism_art'),
-                    const LinkItem('پروفایل', 'https://next.dataist.ir/u/dataism'),
+                    const LinkItem(
+                      'پروفایل',
+                      'https://next.dataist.ir/u/dataism',
+                    ),
                   ]),
                   _buildLinkCategory('Garden.city | شرکت باغبانی', [
                     const LinkItem('تلگرام', 'https://t.me/www_Garden_city'),
@@ -182,9 +215,10 @@ class AboutUsPage extends StatelessWidget {
                   _buildLinkCategory('FBSC.Estahban.city | انبار و لجستیک', [
                     const LinkItem('وب‌سایت', 'https://fbsc.estahban.city'),
                   ]),
-                  _buildLinkCategory('MyEstahban | فروشگاه تجربه‌محور استهبان‌من', [
-                    const LinkItem('فروشگاه', 'https://my.estahban.city'),
-                  ]),
+                  _buildLinkCategory(
+                    'MyEstahban | فروشگاه تجربه‌محور استهبان‌من',
+                    [const LinkItem('فروشگاه', 'https://my.estahban.city')],
+                  ),
                   _buildLinkCategory('Next.Dataist.ir | راهکار سازمانی', [
                     const LinkItem('وب‌سایت', 'https://next.dataist.ir'),
                   ]),
@@ -201,10 +235,10 @@ class AboutUsPage extends StatelessWidget {
                         enamadLogoUrl,
                         width: 120,
                         errorBuilder: (context, error, stackTrace) =>
-                        const Text(
-                          'تصویر اینماد',
-                          style: TextStyle(color: Colors.grey),
-                        ),
+                            const Text(
+                              'تصویر اینماد',
+                              style: TextStyle(color: Colors.grey),
+                            ),
                       ),
                     ),
                   ),
@@ -283,7 +317,11 @@ class AboutUsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLinkCategory(String categoryName, List<LinkItem> items, {bool isFeatured = false}) {
+  Widget _buildLinkCategory(
+    String categoryName,
+    List<LinkItem> items, {
+    bool isFeatured = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Column(
@@ -309,12 +347,19 @@ class AboutUsPage extends StatelessWidget {
                   onTap: () => _launchUrl(item.url),
                   borderRadius: BorderRadius.circular(10),
                   child: Ink(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
-                      color: isFeatured ? const Color(0xFFFEFCBF).withValues(alpha: 0.3) : const Color(0xFFF8FAFC),
+                      color: isFeatured
+                          ? const Color(0xFFFEFCBF).withValues(alpha: 0.3)
+                          : const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: isFeatured ? const Color(0xFFECC94B) : const Color(0xFFE2E8F0),
+                        color: isFeatured
+                            ? const Color(0xFFECC94B)
+                            : const Color(0xFFE2E8F0),
                         width: isFeatured ? 1.2 : 1.0,
                       ),
                     ),
@@ -325,7 +370,12 @@ class AboutUsPage extends StatelessWidget {
                           _getAssetLogoForUrl(item.url),
                           width: 22,
                           height: 22,
-                          errorBuilder: (context, error, stackTrace) => const Icon(Icons.link, size: 22, color: Colors.blue),
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(
+                                Icons.link,
+                                size: 22,
+                                color: Colors.blue,
+                              ),
                         ),
                         const SizedBox(width: 8),
                         Text(
@@ -334,7 +384,9 @@ class AboutUsPage extends StatelessWidget {
                             fontFamily: 'Vazir',
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: isFeatured ? const Color(0xFF744210) : const Color(0xFF2B6CB0),
+                            color: isFeatured
+                                ? const Color(0xFF744210)
+                                : const Color(0xFF2B6CB0),
                           ),
                         ),
                       ],

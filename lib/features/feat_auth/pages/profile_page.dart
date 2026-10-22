@@ -22,15 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (!isLoggedIn || record == null) {
       return Scaffold(
         backgroundColor: const Color(0xFFDDE3F1),
-        appBar: AppBar(
-          title: const Text(
-            'حساب کاربری',
-            style: TextStyle(fontFamily: 'Vazir', color: Color(0xFF333333)),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
+        appBar: AppBar(title: const Text('حساب کاربری')),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -118,15 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFDDE3F1),
-      appBar: AppBar(
-        title: const Text(
-          'پروفایل کاربری',
-          style: TextStyle(fontFamily: 'Vazir', color: Color(0xFF333333)),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      // AppBar به طور خودکار از تم سراسری main.dart پیروی می‌کند
+      appBar: AppBar(title: const Text('پروفایل کاربری')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(

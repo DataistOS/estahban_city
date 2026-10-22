@@ -56,15 +56,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFDDE3F1),
-      appBar: AppBar(
-        title: const Text(
-          "دسته‌بندی‌ها",
-          style: TextStyle(fontFamily: 'Vazir', fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: AppBar(title: const Text("دسته‌بندی‌ها")),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(

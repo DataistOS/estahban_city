@@ -39,6 +39,19 @@ class MyApp extends StatelessWidget {
         fontFamily: 'vazir',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          centerTitle: false,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          iconTheme: IconThemeData(color: Color(0xFF333333)),
+          titleTextStyle: TextStyle(
+            fontFamily: 'vazir',
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF333333),
+          ),
+        ),
       ),
       home: const MainNavigationPage(),
     );
