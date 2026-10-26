@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:matomo_tracker/matomo_tracker.dart';
 
 import 'providers/auth_provider.dart';
 import 'features/feat_main/pages/main_navigation_page.dart';
@@ -11,6 +12,11 @@ import 'features/feat_main/pages/main_navigation_page.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+
+  await MatomoTracker.instance.initialize(
+    siteId: '3',
+    url: 'https://analytics.dataist.ir/matomo.php',
+  );
 
   runApp(
     MultiProvider(
@@ -35,6 +41,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('fa', 'IR')],
+      navigatorObservers: [matomoLocalObserver, MatomoGlobalObserver()],
       theme: ThemeData(
         fontFamily: 'vazir',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
